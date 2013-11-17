@@ -17,7 +17,7 @@ var client = new bitcoin.Client({
 app.use(express.bodyParser());
 client.getBalance('*', 6, function (err, balance) {
   app.post('/api', function (req, res) {
-    if (err) return console.log(err);
+    //if (err) return console.log(err);
     if (block.contains(req.connection.remoteAddress)) {
       if (balance > 0) {
         var gitjson = JSON.parse(req.body.payload);
