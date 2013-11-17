@@ -12,11 +12,12 @@ More dependencies/packages listed in the package.json file
 ##Quick start
 1. Define the rpcusername and rpcpassword in your `bitcoin.conf` file (usually located at ~/.bitcoin/bitcoin.conf) and run the bitcoin daemon.
 2. Run the bitcoind in daemon mode `./bitcoind -daemon`
-3. Create a new address `./bitcoind getnewaddress <account>`
-4. Enable a URL webhook on the github repository by going to your repo page -> Settings -> Service hooks -> WebHook URLs -> Set the URL of the server you are about to run btip on. Default path is http://<your-server-address:3090/api
-5. Clone the btip repository to your server `git clone https://github.com/orweinberger/btip.git`
-6. Edit the configuration file with the relevant details `nano btip/config.js`
-7. Run btip `node btip.js`
+3. Encrypt your bitcoin wallet `./bitcoind encryptwallet '<your-passphrase>'` You will be required to restart the bitcoind daemon
+4. Create a new address `./bitcoind getnewaddress <account>`
+5. Enable a URL webhook on the github repository by going to your repo page -> Settings -> Service hooks -> WebHook URLs -> Set the URL of the server you are about to run btip on. Default path is http://<your-server-address:3090/api
+6. Clone the btip repository to your server `git clone https://github.com/orweinberger/btip.git`
+7. Edit the configuration file with the relevant details `nano btip/config.js`
+8. Run btip `node btip.js`
 
 **Notes:**
 
