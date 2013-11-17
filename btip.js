@@ -29,7 +29,7 @@ client.getBalance('*', 6, function (err, balance) {
             if (balance >= config.tip) {
               console.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
               client.walletPassphrase(config.walletPassphrase, '1');
-              client.sendToAddress(tipaddr[1]);
+              client.sendToAddress(tipaddr[1], config.tip);
             }
             else {
               console.log('Failed send to: ' + tipaddr[1] + ' - Insufficient balance');
