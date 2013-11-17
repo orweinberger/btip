@@ -1,11 +1,12 @@
 var config = require('./config');
 var logger = require('./lib/logger');
 var Netmask = require('netmask').Netmask
-var block = new Netmask(config.netmask);
 var bitaddress = require('bitcoin-address');
 var express = require('express');
-var app = express();
 var bitcoin = require('bitcoin');
+
+var app = express();
+var block = new Netmask(config.netmask);
 
 var client = new bitcoin.Client({
   host: config.host,
