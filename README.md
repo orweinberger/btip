@@ -23,16 +23,6 @@ More dependencies/packages listed in the package.json file
 * Running the bitcoin daemon takes about 30seconds - 1 minute so please have some patience between step step 2 and 3
 * Currently btip's default port is 3090. Don't forget to define that in your github webhook configuration.
 
-Then, enable URL webhooks on the desired repository. Go to your repo page -> Settings -> Service hooks -> WebHook URLs -> Set the URL of the server you are about to run btip on. Default path is http://<your-server-address/api
-
-```
-./bitcoind -daemon
-
-cd btip
-#Edit the config.js file to suit your needs, see config section below for more info
-node btip.js
-```
-
 ##Configuration
 
 ```
