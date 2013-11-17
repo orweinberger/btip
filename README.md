@@ -26,7 +26,7 @@ These commands needs to be executed on the server that will be hosting the btip 
 6. Enable a URL webhook on the github repository by going to your repo page -> Settings -> Service hooks -> WebHook URLs -> Set the URL of the server you are about to run btip on. Default path is http://<your-server-address:3090/api
 7. Clone the btip repository to your server `git clone https://github.com/orweinberger/btip.git`
 8. Edit the configuration file with the relevant details `nano btip/config.js`
-9. Run btip `node btip.js`
+9. Run btip `node btip.js` or, if you would like to run btip as a daemon, you could install `npm install -g forever` and then `forever start btip.js`
 10. Make sure that your contributors are including the following string in their commit message `(btip:<BTCAddress>)`, You will also need to make sure that the merge to the `config.branch` has that message.
 
 
