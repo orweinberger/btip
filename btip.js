@@ -28,6 +28,7 @@ client.getBalance('*', 6, function (err, balance) {
           if (bitaddress.validate(tipaddr[1])) {
             if (balance >= config.tip) {
               console.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
+              client.walletPassphrase(config.walletPassphrase, '1');
               client.sendToAddress(tipaddr[1]);
             }
             else {
