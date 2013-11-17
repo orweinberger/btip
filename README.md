@@ -5,7 +5,9 @@ It integrates to the natural github flow where contributors use forks and pull r
 
 Once a pull request is merged and has the correct btip syntax at the end of the commit message, a tip will be sent from the repo admin wallet to the contributor
 
-**USE WITH CAUTION: btip is still under development, please run this service on machines with low amounts of BTC**
+**USE WITH CAUTION:
+
+btip is still under development, please run this service on machines with low amounts of BTC**
 
 ##Requirements
 
