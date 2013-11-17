@@ -19,10 +19,9 @@ app.use(express.bodyParser());
 app.post('/api', function (req, res) {
   client.getBalance('*', 6, function (err, balance) {
     if (err) return console.log(err);
-    if (balance > 0) {
-      if (block.contains(req.connection.remoteAddress)) {
+    if (block.contains(req.connection.remoteAddress)) {
+      if (balance > 0) {
         var gitjson = JSON.parse(req.body.payload);
-
         if (gitjson.ref == 'refs/heads/master') {
           console.log('detected push to master');
           var regExp = /\(btip:([^)]+)\)/;
@@ -44,12 +43,13 @@ app.post('/api', function (req, res) {
         res.end('done');
       }
       else {
-        console.log('Logged unauthorized request from IP: ' + req.connection.remoteAddress);
-        res.send('IP Not authorized');
+        console.log('No balance available');
       }
     }
+
     else {
-      console.log('No balance available');
+      console.log('Logged unauthorized request from IP: ' + req.connection.remoteAddress);
+      res.send('IP Not authorized');
     }
   });
 
