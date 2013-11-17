@@ -16,12 +16,12 @@ var client = new bitcoin.Client({
 
 app.use(express.bodyParser());
 client.getBalance('*', 6, function (err, balance) {
+  if (err) return console.log(err);
   app.post('/api', function (req, res) {
-    //if (err) return console.log(err);
     if (block.contains(req.connection.remoteAddress)) {
       if (balance > 0) {
         var gitjson = JSON.parse(req.body.payload);
-        if (gitjson.ref == 'refs/heads/master') {
+        if (gitjson.ref == 'refs/heads/' + config.branch) {
           console.log('detected push to master');
           var regExp = /\(btip:([^)]+)\)/;
           var tipaddr = regExp.exec(gitjson.head_commit.message);
