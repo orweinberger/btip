@@ -40,3 +40,6 @@ var config = {
   "tip": 0.001 //tip amount
 }
 ```
+
+If you found this useful and feel like donating, please send some coins to:
+**13K9DtTXf5kANesDdK3VSrGPdF4FaYk8nX**
