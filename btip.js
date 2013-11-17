@@ -26,7 +26,6 @@ client.getBalance('*', 6, function (err, balance) {
           var regExp = /\(btip:([^)]+)\)/;
           var tipaddr = regExp.exec(gitjson.head_commit.message);
           if (bitaddress.validate(tipaddr[1])) {
-
             if (balance >= config.tip) {
               console.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
               client.sendToAddress(tipaddr[1]);
@@ -34,7 +33,6 @@ client.getBalance('*', 6, function (err, balance) {
             else {
               console.log('Failed send to: ' + tipaddr[1] + ' - Insufficient balance');
             }
-
           }
           else
             console.log('Failed send to: ' + tipaddr[1] + ' - Invalid address');
@@ -53,5 +51,5 @@ client.getBalance('*', 6, function (err, balance) {
 
 });
 
-app.listen(80);
-console.log('btip Listening on port 80');
+app.listen(3090);
+console.log('btip Listening on port 3090');
