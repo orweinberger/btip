@@ -18,6 +18,8 @@ More dependencies/packages listed in the package.json file
 6. Clone the btip repository to your server `git clone https://github.com/orweinberger/btip.git`
 7. Edit the configuration file with the relevant details `nano btip/config.js`
 8. Run btip `node btip.js`
+9. Make sure that your contributors are including the following string in their commit message `(btip:<BTCAddress>)`, You will also need to make sure that the merge to the `config.branch` has that message.
+
 
 **Notes:**
 
