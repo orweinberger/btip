@@ -36,6 +36,7 @@ var config = {
   "password": "<rpc-password>", //bitcoind password
   "branch": "master", //branch to monitor and tip for contributions
   "netmask": "192.30.252.0/22", //allowed netmask, you can get this info from the URL hooks section of you repo settings
+  "walletPassphrase": "1234", //Your encrypted wallet passphrase
   "tip": 0.001 //tip amount
 }
 ```

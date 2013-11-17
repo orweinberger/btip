@@ -1,8 +1,8 @@
 var config = require('./config');
+var logger = require('./lib/logger');
 var Netmask = require('netmask').Netmask
 var block = new Netmask(config.netmask);
 var bitaddress = require('bitcoin-address');
-
 var express = require('express');
 var app = express();
 var bitcoin = require('bitcoin');
@@ -22,29 +22,27 @@ client.getBalance('*', 6, function (err, balance) {
       if (balance > 0) {
         var gitjson = JSON.parse(req.body.payload);
         if (gitjson.ref == 'refs/heads/' + config.branch) {
-          console.log('detected push to master');
+          logger.log('detected push to master');
           var regExp = /\(btip:([^)]+)\)/;
           var tipaddr = regExp.exec(gitjson.head_commit.message);
           if (bitaddress.validate(tipaddr[1])) {
             if (balance >= config.tip) {
-              console.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
+              logger.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
               client.walletPassphrase(config.walletPassphrase, '1');
               client.sendToAddress(tipaddr[1], config.tip);
             }
-            else {
-              console.log('Failed send to: ' + tipaddr[1] + ' - Insufficient balance');
-            }
+            else
+              logger.log('error', 'Failed send to: ' + tipaddr[1] + ' - Insufficient balance');
           }
           else
-            console.log('Failed send to: ' + tipaddr[1] + ' - Invalid address');
+            logger.log('error', 'Failed send to: ' + tipaddr[1] + ' - Invalid address');
         }
       }
-      else {
-        console.log('No balance available');
-      }
+      else
+        logger.log('error', 'No balance available');
     }
     else {
-      console.log('Logged unauthorized request from IP: ' + req.connection.remoteAddress);
+      logger.log('warn', 'Logged unauthorized request from IP: ' + req.connection.remoteAddress);
       res.send('IP Not authorized');
     }
     res.end('done');
@@ -53,4 +51,4 @@ client.getBalance('*', 6, function (err, balance) {
 });
 
 app.listen(3090);
-console.log('btip Listening on port 3090');
+logger.log('info', 'btip Listening on port 3090');
