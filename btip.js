@@ -39,17 +39,16 @@ client.getBalance('*', 6, function (err, balance) {
           else
             console.log('Failed send to: ' + tipaddr[1] + ' - Invalid address');
         }
-        res.end('done');
       }
       else {
         console.log('No balance available');
       }
     }
-
     else {
       console.log('Logged unauthorized request from IP: ' + req.connection.remoteAddress);
       res.send('IP Not authorized');
     }
+    res.end('done');
   });
 
 });
