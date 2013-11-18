@@ -26,14 +26,15 @@ client.getBalance('*', 6, function (err, balance) {
           logger.log('detected push to master');
           var regExp = /\(btip:([^)]+)\)/;
           var tipaddr = regExp.exec(gitjson.head_commit.message);
-          if (bitaddress.validate(tipaddr[1])) {
+          if (bitaddress.validate(tipaddr[1]).trim()) {
+            var validAddr = tipaddr[1].trim();
             if (balance >= config.tip) {
-              logger.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
+              logger.log('Sending ' + config.tip + 'BTC to ' + validAddr);
               client.walletPassphrase(config.walletPassphrase, '1');
-              client.sendToAddress(tipaddr[1], config.tip);
+              client.sendToAddress(validAddr, config.tip);
             }
             else
-              logger.log('error', 'Failed send to: ' + tipaddr[1] + ' - Insufficient balance');
+              logger.log('error', 'Failed send to: ' + validAddr + ' - Insufficient balance');
           }
           else
             logger.log('error', 'Failed send to: ' + tipaddr[1] + ' - Invalid address');
