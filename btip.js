@@ -4,6 +4,7 @@ var Netmask = require('netmask').Netmask
 var bitaddress = require('bitcoin-address');
 var express = require('express');
 var bitcoin = require('bitcoin');
+var git = require('./lib/github');
 
 var app = express();
 var block = new Netmask(config.netmask);
@@ -26,26 +27,35 @@ client.getBalance('*', 6, function (err, balance) {
           logger.log('detected push to master');
           var regExp = /\(btip:([^)]+)\)/;
           var tipaddr = regExp.exec(gitjson.head_commit.message);
-          if (bitaddress.validate(tipaddr[1])) {
+          var tipTo = tipaddr[1].trim();
+          if (bitaddress.validate(tipTo)) {
             if (balance >= config.tip) {
-              logger.log('Sending ' + config.tip + 'BTC to ' + tipaddr[1]);
+              logger.log('Sending ' + config.tip + 'BTC to ' + tipTo);
               client.walletPassphrase(config.walletPassphrase, '1');
-              client.sendToAddress(tipaddr[1], config.tip);
+              client.sendToAddress(tipTo, config.tip);
+              var pullnumber = git.getPullNumber(gitjson.head_commit.message)
+              git.addComment('Sent ' + config.tip + 'BTC to ' + tipTo + '. Thanks for committing!')
             }
-            else
-              logger.log('error', 'Failed send to: ' + tipaddr[1] + ' - Insufficient balance');
+            else {
+              logger.log('error', 'Failed send to: ' + tipTo + ' - Insufficient balance');
+              git.addComment('Failed send to: ' + tipTo + ' due to insufficient balance. Repo admin has been notified')
+            }
           }
-          else
-            logger.log('error', 'Failed send to: ' + tipaddr[1] + ' - Invalid address');
+          else {
+            logger.log('error', 'Failed send to: ' + tipTo + ' - Invalid address');
+            git.addComment('Failed send to: ' + tipTo + ' Address is invalid. Repo admin has been notified')
+          }
         }
       }
       else
         logger.log('error', 'No balance available');
     }
+
     else {
       logger.log('warn', 'Logged unauthorized request from IP: ' + req.connection.remoteAddress);
       res.send('IP Not authorized');
     }
+
     res.end('done');
   });
 
