@@ -26,24 +26,24 @@ client.getBalance('*', 6, function (err, balance) {
         if (gitjson.ref == 'refs/heads/' + config.branch) {
           logger.log('detected push to master');
           var regExp = /\(btip:([^)]+)\)/;
+          var pullnumber = git.getPullNumber(gitjson.head_commit.message)
           var tipaddr = regExp.exec(gitjson.head_commit.message);
           var tipTo = tipaddr[1].trim();
           if (bitaddress.validate(tipTo)) {
             if (balance >= config.tip) {
-              logger.log('Sending ' + config.tip + 'BTC to ' + tipTo);
+              logger.log('info', 'Sending ' + config.tip + 'BTC to ' + tipTo);
               client.walletPassphrase(config.walletPassphrase, '1');
               client.sendToAddress(tipTo, config.tip);
-              var pullnumber = git.getPullNumber(gitjson.head_commit.message)
-              git.addComment('Sent ' + config.tip + 'BTC to ' + tipTo + '. Thanks for committing!')
+              git.addComment('Sent ' + config.tip + 'BTC to ' + tipTo + '. Thanks for committing!', pullnumber)
             }
             else {
               logger.log('error', 'Failed send to: ' + tipTo + ' - Insufficient balance');
-              git.addComment('Failed send to: ' + tipTo + ' due to insufficient balance. Repo admin has been notified')
+              git.addComment('Failed send to: ' + tipTo + ' due to insufficient balance. Repo admin has been notified', pullnumber)
             }
           }
           else {
             logger.log('error', 'Failed send to: ' + tipTo + ' - Invalid address');
-            git.addComment('Failed send to: ' + tipTo + ' Address is invalid. Repo admin has been notified')
+            git.addComment('Failed send to: ' + tipTo + ' Address is invalid. Repo admin has been notified', pullnumber)
           }
         }
       }
