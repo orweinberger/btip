@@ -21,6 +21,7 @@
     "bitcoin":"*",
     "express": "*",
     "netmask": "*",
-    "bitcoin-address": "*"
+    "bitcoin-address": "*",
+    "github": "*"
   }
 }
