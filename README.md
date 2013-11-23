@@ -1,4 +1,4 @@
-#btip _(alpha)_
+#btip _(beta)_
 btip is a bitcoin tipping service that allows repository owners to tip contributors automatically.
 
 It integrates to the natural github flow where contributors use forks and pull requests to contribute to other repositories.
@@ -18,16 +18,21 @@ More dependencies/packages listed in the package.json file
 ##Quick start
 These commands needs to be executed on the server that will be hosting the btip service.
 
+###Run bitcoind in daemon mode
 1. Define the rpcusername and rpcpassword in your `bitcoin.conf` file (usually located at ~/.bitcoin/bitcoin.conf) and run the bitcoin daemon.
 2. Run the bitcoind in daemon mode `./bitcoind -daemon`
 3. Encrypt your bitcoin wallet `./bitcoind encryptwallet '<your-passphrase>'` You will be required to restart the bitcoind daemon
 4. Create a new address `./bitcoind getnewaddress <account>`
 5. Send some coins to the new address so you could tip contributors (Please note the warning at the top of this readme)
-6. Enable a URL webhook on the github repository by going to your repo page -> Settings -> Service hooks -> WebHook URLs -> Set the URL of the server you are about to run btip on. Default path is http://<your-server-address:3090/api
-7. Clone the btip repository to your server `git clone https://github.com/orweinberger/btip.git`
-8. Edit the configuration file with the relevant details `nano btip/config.js`
-9. Run btip `node btip.js` or, if you would like to run btip as a daemon, you could install `npm install -g forever` and then `forever start btip.js`
-10. Make sure that your contributors are including the following string in their commit message `(btip:<BTCAddress>)`, You will also need to make sure that the merge to the `config.branch` has that message.
+
+###Set a webhook URL for the desired github repository
+1. Enable a URL webhook on the github repository by going to your repo page -> Settings -> Service hooks -> WebHook URLs -> Set the URL of the server you are about to run btip on. Default path is http://<your-server-address:3090/api
+
+###Run btip
+1. Clone the btip repository to your server `git clone https://github.com/orweinberger/btip.git`
+2. Edit the configuration file with the relevant details `nano btip/config.js`
+3. Run btip `node btip.js` or, if you would like to run btip as a daemon, you could install `npm install -g forever` and then `forever start btip.js`
+4. Make sure that your contributors are including the following string in their commit message `(btip:<BTCAddress>)`, You will also need to make sure that the merge to the `config.branch` has that message.
 
 
 **Notes:**
@@ -47,6 +52,9 @@ var config = {
   "netmask": "192.30.252.0/22", //allowed netmask, you can get this info from the URL hooks section of you repo settings
   "walletPassphrase": "1234", //Your encrypted wallet passphrase
   "tip": 0.001 //tip amount
+  "githubuser": "git-username", // Your github username
+  "githubpass": "git-password", // Your github password
+  "gitrepo": "repo-name" // Your github repository name
 }
 ```
 
